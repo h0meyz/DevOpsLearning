@@ -1,0 +1,28 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - Main
+      
+
+jobs:
+  install-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Python 3.8.x
+        uses: actions/setup-python@v2.2.1
+        with:
+          python-version: 3.8.x
+
+  deploy-changes:
+    runs-on: ubuntu-latest
+    environment: 
+      name: ${{ github.ref_name }}
+    steps:
+      
+      - name: Print IP Address
+        run: |
+          sudo apt-get install -y jq
+          IP=$(curl -s http://checkip.amazonaws.com)
+          echo "Public IP Address: $IP"
